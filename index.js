@@ -6,7 +6,7 @@ const token = config.token;
 const prefix = config.prefix;
 
 client.on('ready', () => {
-    console.log('SpoopyBot is online!');
+    console.log('beanbot is online!');
 });
 
 client.on('message', (message) => {
@@ -21,7 +21,7 @@ client.on('message', (message) => {
     }
 
     let command = clean.split(' ')[0].slice(1);
-    let args = message.content.replace('!' + command, '').trim();
+    let args = message.content.replace(prefix + command, '').trim();
 
     switch (command) {
         case 'say':
