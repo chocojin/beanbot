@@ -46,7 +46,7 @@ client.on('message', (message) => {
             }
             break;
         case 'muteall': {
-            if (message.member.hasPermission("MUTE_MEMBERS")) {
+            if (message.member.hasPermission("MUTE_MEMBERS") && message.member.voice.channel) {
                 let voiceChannel = message.member.voice.channel;
                 for (let member of voiceChannel.members) {
                     member[1].voice.setMute(true);
@@ -55,10 +55,15 @@ client.on('message', (message) => {
                 .setDescription("Muted all in **" + voiceChannel.name + "**.");
                 message.channel.send(messageSend);
             }
+            else if (!message.member.hasPermission("MUTE_MEMBERS")) {
+                errorMessage(message.channel, "User does not have permission to mute.")
+            } else {
+                errorMessage(message.channel, "User is not in any voice channel.")
+            }
             break;
         }
         default:
-            errorMessage(message.channel, "Unknown command **" + command + "**.");
+            errorMessage(message.channel, (command === '') ? "Unknown command." : "Unknown command **" + command + "**.");
     }
 
 });
